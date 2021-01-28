@@ -68,9 +68,9 @@ class MetasImage {
         package = null;
 
   const MetasImage.asset(
-    this.path, {
-    this.package,
-  }) : type = ImageType.asset;
+      this.path, {
+        this.package,
+      }) : type = ImageType.asset;
 
   const MetasImage.file(this.path)
       : type = ImageType.file,
@@ -79,11 +79,11 @@ class MetasImage {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MetasImage &&
-          runtimeType == other.runtimeType &&
-          path == other.path &&
-          package == other.package &&
-          type == other.type;
+          other is MetasImage &&
+              runtimeType == other.runtimeType &&
+              path == other.path &&
+              package == other.package &&
+              type == other.type;
 
   @override
   int get hashCode => path.hashCode ^ package.hashCode ^ type.hashCode;
@@ -115,13 +115,13 @@ class Metas {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Metas &&
-          runtimeType == other.runtimeType &&
-          title == other.title &&
-          artist == other.artist &&
-          album == other.album &&
-          image == other.image &&
-          onImageLoadFail == onImageLoadFail;
+          other is Metas &&
+              runtimeType == other.runtimeType &&
+              title == other.title &&
+              artist == other.artist &&
+              album == other.album &&
+              image == other.image &&
+              onImageLoadFail == onImageLoadFail;
 
   @override
   int get hashCode =>
@@ -177,42 +177,42 @@ class Audio extends Playable {
         _networkHeaders = headers;
 
   Audio(
-    this.path, {
-    Metas metas,
-    this.package,
-    this.playSpeed,
-  })  : audioType = AudioType.asset,
+      this.path, {
+        Metas metas,
+        this.package,
+        this.playSpeed,
+      })  : audioType = AudioType.asset,
         _networkHeaders = null,
         cached = false,
         _metas = metas;
 
   Audio.file(
-    this.path, {
-    Metas metas,
-    this.playSpeed,
-  })  : audioType = AudioType.file,
+      this.path, {
+        Metas metas,
+        this.playSpeed,
+      })  : audioType = AudioType.file,
         package = null,
         _networkHeaders = null,
         cached = false,
         _metas = metas;
 
   Audio.network(
-    this.path, {
-    Metas metas,
-    Map<String, dynamic> headers,
-    this.cached = false,
-    this.playSpeed,
-  })  : audioType = AudioType.network,
+      this.path, {
+        Metas metas,
+        Map<String, dynamic> headers,
+        this.cached = false,
+        this.playSpeed,
+      })  : audioType = AudioType.network,
         package = null,
         _networkHeaders = headers,
         _metas = metas;
 
   Audio.liveStream(
-    this.path, {
-    Metas metas,
-    this.playSpeed,
-    Map<String, dynamic> headers,
-  })  : audioType = AudioType.liveStream,
+      this.path, {
+        Metas metas,
+        this.playSpeed,
+        Map<String, dynamic> headers,
+      })  : audioType = AudioType.liveStream,
         package = null,
         _networkHeaders = headers,
         cached = false,
@@ -221,14 +221,14 @@ class Audio extends Playable {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Audio &&
-          runtimeType == other.runtimeType &&
-          path == other.path &&
-          package == other.package &&
-          audioType == other.audioType &&
-          cached == other.cached &&
-          playSpeed == other.playSpeed &&
-          metas == other.metas;
+          other is Audio &&
+              runtimeType == other.runtimeType &&
+              path == other.path &&
+              package == other.package &&
+              audioType == other.audioType &&
+              cached == other.cached &&
+              playSpeed == other.playSpeed &&
+              metas == other.metas;
 
   @override
   int get hashCode =>
@@ -345,13 +345,14 @@ class Playlist extends Playable {
   }
 
   Playlist replaceAt(int index, PlaylistAudioReplacer replacer,
-      {bool keepPlayingPositionIfCurrent = false}) {
+      {bool keepPlayingPositionIfCurrent = false, Duration currentPos = null}) {
     if (index < this.audios.length && replacer != null) {
       final oldElement = this.audios.elementAt(index);
       final newElement = replacer(oldElement);
       this.audios[index] = newElement;
       super.currentlyOpenedIn.forEach((playerEditor) {
-        playerEditor.onAudioReplacedAt(index, keepPlayingPositionIfCurrent);
+        // playerEditor.onAudioReplacedAt(index, keepPlayingPositionIfCurrent);
+        playerEditor.onAudioReplacedAt(index, keepPlayingPositionIfCurrent, currentPos);
       });
     }
     return this;
@@ -390,10 +391,10 @@ class Playlist extends Playable {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Playlist &&
-          runtimeType == other.runtimeType &&
-          audios == other.audios &&
-          startIndex == other.startIndex;
+          other is Playlist &&
+              runtimeType == other.runtimeType &&
+              audios == other.audios &&
+              startIndex == other.startIndex;
 
   @override
   int get hashCode => audios.hashCode ^ startIndex.hashCode;
