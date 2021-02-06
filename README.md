@@ -39,6 +39,15 @@ AssetsAudioPlayer.newPlayer().open(
 ```yaml
 dependencies:
   assets_audio_player: ^2.0.13
+  
+or
+
+assets_audio_player:
+git:
+url: https://github.com/florent37/Flutter-AssetsAudioPlayer.git
+ref: master
+
+ref can be latest commit id. 
 ```
 
 **Works with `flutter: ">=1.12.13+hotfix.6 <2.0.0"`, be sure to upgrade your sdk**
