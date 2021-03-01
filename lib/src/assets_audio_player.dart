@@ -700,10 +700,23 @@ class AssetsAudioPlayer {
   Future<bool> previous({bool keepLoopMode = true}) async {
     if (_playlist != null) {
       //more than 5 sec played, go back to the start of audio
-      if (_currentPosition.value != null &&
-          _currentPosition.value.inSeconds >= 5) {
-        await seek(Duration.zero, force: true);
-      } else if (_playlist.hasPrev()) {
+      // if (_currentPosition.value != null &&
+      //     _currentPosition.value.inSeconds >= 5) {
+      //   await seek(Duration.zero, force: true);
+      // } else if (_playlist.hasPrev()) {
+      //   if (!keepLoopMode) {
+      //     if (loopMode.value == LoopMode.single) {
+      //       await setLoopMode(LoopMode.playlist);
+      //     }
+      //   }
+      //   _playlist.selectPrev();
+      //   await _openPlaylistCurrent();
+      //   return true;
+      // } else if (_playlist.playlistIndex == 0) {
+      //   seek(Duration.zero);
+      //   return true;
+      // }
+      if (_playlist.hasPrev()) {
         if (!keepLoopMode) {
           if (loopMode.value == LoopMode.single) {
             await setLoopMode(LoopMode.playlist);
