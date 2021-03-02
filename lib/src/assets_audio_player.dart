@@ -689,7 +689,7 @@ class AssetsAudioPlayer {
     });
   }
 
-  Future<void> playlistPlayAtIndex(int index, bool autoStart) async
+  Future<void> playlistPlayAtIndex(int index, bool autoStart) async {
     _playlist.moveTo(index);
     await _openPlaylistCurrent(autoStart: autoStart);
   }
