@@ -689,9 +689,9 @@ class AssetsAudioPlayer {
     });
   }
 
-  Future<void> playlistPlayAtIndex(int index) async {
+  Future<void> playlistPlayAtIndex(int index, bool autoStart) async
     _playlist.moveTo(index);
-    await _openPlaylistCurrent();
+    await _openPlaylistCurrent(autoStart: autoStart);
   }
 
   /// keepLoopMode:
