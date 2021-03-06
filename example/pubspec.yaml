@@ -13,15 +13,18 @@ dependencies:
   rxdart: ^0.25.0
   # for local file test
   dio: ^4.0.0-beta5
-  path_provider: ^1.6.27
+  path_provider: ^2.0.1
 
   http: ^0.13.0
   provider: ^4.1.2
 
-  file: ^5.0.4
+  file: ^6.1.0
   flutter_audio_recorder: 0.5.5
 
   flutter_audio_query: ^0.3.4+1
+
+dependency_overrides:
+  file: ^6.1.0
 
 dev_dependencies:
   flutter_test:
