@@ -762,10 +762,9 @@ public class Player : NSObject, AVAudioPlayerDelegate {
     }
     
     func seek(to: Int){
-        self.pause()
-        let targetTime = CMTimeMakeWithSeconds(Double(to) / 1000.0, preferredTimescale: 1000000)
+        let targetTime = CMTimeMakeWithSeconds(Double(to) / 1000.0, preferredTimescale: 1)
         self.player?.seek(to: targetTime, toleranceBefore: .zero, toleranceAfter: .zero)
-        self.play()
+        self._currentTime = targetTime
     }
     
     func setVolume(volume: Double){
@@ -837,7 +836,7 @@ public class Player : NSObject, AVAudioPlayerDelegate {
             self.player?.play()
             self.player?.rate = self.rate
         }
-        self.currentTimeTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+        self.currentTimeTimer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         self.currentTimeTimer?.fire()
 //        self.playing = true
         
@@ -847,9 +846,6 @@ public class Player : NSObject, AVAudioPlayerDelegate {
     private var looper: Any?
     
     func loopSingleAudio(loop: Bool) {
-
-        self.pause()
-
         _loopSingleAudio = loop
         
         let currentPosMillis = self._currentTime
@@ -886,10 +882,8 @@ public class Player : NSObject, AVAudioPlayerDelegate {
             #endif
         }
         seek(to: Int(currentPosMillis))
-
-        self.play()
     }
-
+    
     var _currentTime : Double = 0.0
     
     private var currentTimeMs : Double {
