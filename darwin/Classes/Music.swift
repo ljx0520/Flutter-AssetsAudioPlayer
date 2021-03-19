@@ -767,19 +767,19 @@ public class Player : NSObject, AVAudioPlayerDelegate {
         self.player?.seek(to: targetTime, toleranceBefore: .zero, toleranceAfter: .zero)
         self.play()
     }
-    
+
     func setVolume(volume: Double){
         self.player?.volume = Float(volume)
         self.channel.invokeMethod(Music.METHOD_VOLUME, arguments: volume)
     }
-    
+
     private func onError(_ error: AssetAudioPlayerError){
         self.channel.invokeMethod(Music.METHOD_ERROR, arguments: [
             "type" : error.type,
             "message" : error.message,
         ])
     }
-    
+
     var _rate : Float = 1.0
     var rate : Float {
         get {
@@ -792,27 +792,27 @@ public class Player : NSObject, AVAudioPlayerDelegate {
             }
         }
     }
-    
+
     func setPlaySpeed(playSpeed: Double){
         self.rate = Float(playSpeed)
         if(self._playing){
             self.player?.rate = self.rate
         }
     }
-    
+
     func forwardRewind(speed: Double){
         //on ios we can have nevative speed
         self.player?.rate = Float(speed) //it does not changes self.rate here
-        
+
         self.channel.invokeMethod(Music.METHOD_FORWARD_REWIND, arguments: speed)
     }
-    
+
     func stop(){
         self.player?.pause()
         self.player?.rate = 0.0
-        
+
         self.updateNotifStatus(playing: self.playing, stopped: true, rate: self.player?.rate)
-        
+
         self.player?.seek(to: CMTime.zero)
         self.playing = false
         self.currentTimeTimer?.invalidate()
@@ -829,7 +829,7 @@ public class Player : NSObject, AVAudioPlayerDelegate {
         #endif
         self.player = nil
     }
-    
+
     func play(){
         if #available(iOS 10.0, *) {
             self.player?.playImmediately(atRate: self.rate)
@@ -840,20 +840,20 @@ public class Player : NSObject, AVAudioPlayerDelegate {
         self.currentTimeTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         self.currentTimeTimer?.fire()
 //        self.playing = true
-        
+
         //self.updateNotifStatus(playing: self.playing, stopped: false, rate: self.player?.rate)
     }
-    
+
     private var looper: Any?
-    
+
     func loopSingleAudio(loop: Bool) {
 
         self.pause()
 
         _loopSingleAudio = loop
-        
+
         let currentPosMillis = self._currentTime
-        
+
         if(loop){
             #if os(iOS)
             if #available(iOS 10.0, *) {
