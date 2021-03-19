@@ -764,7 +764,7 @@ public class Player : NSObject, AVAudioPlayerDelegate {
     func seek(to: Int){
         let targetTime = CMTimeMakeWithSeconds(Double(to) / 1000.0, preferredTimescale: 1)
         self.player?.seek(to: targetTime, toleranceBefore: .zero, toleranceAfter: .zero)
-        self._currentTime = targetTime
+        self._currentTime = to
     }
     
     func setVolume(volume: Double){
