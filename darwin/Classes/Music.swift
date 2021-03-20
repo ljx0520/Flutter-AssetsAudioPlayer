@@ -762,9 +762,10 @@ public class Player : NSObject, AVAudioPlayerDelegate {
     }
     
     func seek(to: Int){
+        self.pause()
         let targetTime = CMTimeMakeWithSeconds(Double(to) / 1000.0, preferredTimescale: 1000000)
         self.player?.seek(to: targetTime, toleranceBefore: .zero, toleranceAfter: .zero)
-        updateCurrentTime(time: targetTime)
+        self.play()
     }
     
     func setVolume(volume: Double){
@@ -882,9 +883,6 @@ public class Player : NSObject, AVAudioPlayerDelegate {
             #endif
         }
         seek(to: Int(currentPosMillis))
-        let targetTime = CMTimeMakeWithSeconds(Double(currentPosMillis) / 1000.0, preferredTimescale: 1000000)
-        updateCurrentTime(time: targetTime)
-
     }
 
     var _currentTime : Double = 0.0
