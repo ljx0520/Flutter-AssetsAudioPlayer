@@ -760,7 +760,7 @@ public class Player : NSObject, AVAudioPlayerDelegate {
     private func setBuffering(_ value: Bool){
         self.channel.invokeMethod(Music.METHOD_IS_BUFFERING, arguments: value)
     }
-    
+
     func seek(to: Int){
         self.pause()
         let targetTime = CMTimeMakeWithSeconds(Double(to) / 1000.0, preferredTimescale: 1000000)
