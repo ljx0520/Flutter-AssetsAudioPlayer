@@ -884,7 +884,7 @@ public class Player : NSObject, AVAudioPlayerDelegate {
         seek(to: Int(currentPosMillis))
         let targetTime = CMTimeMakeWithSeconds(Double(currentPosMillis) / 1000.0, preferredTimescale: 1000000)
         updateCurrentTime(time: targetTime)
-    }
+
     }
 
     var _currentTime : Double = 0.0
