@@ -847,6 +847,9 @@ public class Player : NSObject, AVAudioPlayerDelegate {
     private var looper: Any?
     
     func loopSingleAudio(loop: Bool) {
+
+        self.pause()
+
         _loopSingleAudio = loop
         
         let currentPosMillis = self._currentTime
@@ -883,6 +886,8 @@ public class Player : NSObject, AVAudioPlayerDelegate {
             #endif
         }
         seek(to: Int(currentPosMillis))
+
+        self.play()
     }
 
     var _currentTime : Double = 0.0
