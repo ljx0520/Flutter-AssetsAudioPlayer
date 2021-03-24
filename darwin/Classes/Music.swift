@@ -762,13 +762,13 @@ public class Player : NSObject, AVAudioPlayerDelegate {
     }
     
     func seek(to: Int){
-        let isPlaying = self.playing
-        self.pause()
+        // let isPlaying = self.playing
+        // self.pause()
         let targetTime = CMTimeMakeWithSeconds(Double(to) / 1000.0, preferredTimescale: 1000000)
         self.player?.seek(to: targetTime, toleranceBefore: .zero, toleranceAfter: .zero)
-        if(isPlaying){
-            self.play()
-        }
+        // if(isPlaying){
+        //     self.play()
+        // }
     }
 
     func setVolume(volume: Double){
