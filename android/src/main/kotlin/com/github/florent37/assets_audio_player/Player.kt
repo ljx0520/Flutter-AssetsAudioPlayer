@@ -176,24 +176,24 @@ class Player(
         this.audioFocusStrategy = audioFocusStrategy
 
         _lastOpenedPath = assetAudioPath
-      
+
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 val playerWithDuration = PlayerFinder.findWorkingPlayer(
                         PlayerFinderConfiguration(
-                        assetAudioPath = assetAudioPath,
-                        flutterAssets = flutterAssets,
-                        assetAudioPackage = assetAudioPackage,
-                        audioType = audioType,
-                        networkHeaders = networkHeaders,
-                        context = context,
-                        onFinished = {
-                            stopWhenCall.stop()
-                            onFinished?.invoke()
-                        },
-                        onPlaying = onPlaying,
-                        onBuffering = onBuffering,
-                        onError= onError
+                                assetAudioPath = assetAudioPath,
+                                flutterAssets = flutterAssets,
+                                assetAudioPackage = assetAudioPackage,
+                                audioType = audioType,
+                                networkHeaders = networkHeaders,
+                                context = context,
+                                onFinished = {
+                                    stopWhenCall.stop()
+                                    onFinished?.invoke()
+                                },
+                                onPlaying = onPlaying,
+                                onBuffering = onBuffering,
+                                onError= onError
                         )
                 )
 
@@ -288,7 +288,7 @@ class Player(
                             speed = this.playSpeed.toFloat(),
                             currentPositionMs = _positionMs
                     )
-        }
+                }
     }
 
     fun forceNotificationForGroup(
@@ -317,7 +317,7 @@ class Player(
             updateNotif()
         }
     }
-    
+
     private fun updateNotif(removeNotificationOnStop: Boolean = true) {
         this.audioMetas?.takeIf { this.displayNotification }?.let { audioMetas ->
             this.notificationSettings?.let { notificationSettings ->
@@ -539,9 +539,9 @@ class ForwardHandler : Handler() {
         this.player = null
     }
 
-    override fun handleMessage(msg: Message?) {
+    override fun handleMessage(msg: Message) {
         super.handleMessage(msg)
-        if (msg?.what == MESSAGE_FORWARD) {
+        if (msg.what == MESSAGE_FORWARD) {
             this.player?.let {
                 it.seekBy((DELAY * speed).toLong())
                 sendEmptyMessageDelayed(MESSAGE_FORWARD, DELAY)
