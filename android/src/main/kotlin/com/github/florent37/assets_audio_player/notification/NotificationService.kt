@@ -62,7 +62,7 @@ class NotificationService : Service() {
                         .build()
 
                 if(
-                        //pause -> play, play-> pause
+                //pause -> play, play-> pause
                         stateCompat?.state != newState.state ||
                         //speed changed
                         stateCompat?.playbackSpeed != speed ||
@@ -269,12 +269,13 @@ class NotificationService : Service() {
                     }
                 }
                 .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
-                        .also{
-                           when (notificationSettings.numberEnabled()) {	
-                                1 -> it.setShowActionsInCompactView(0)	
-                                2 -> it.setShowActionsInCompactView(0, 1)	
-                                3 -> it.setShowActionsInCompactView(0, 1, 2)	
-                                else -> it.setShowActionsInCompactView()	
+                        .also {
+                            when (notificationSettings.numberEnabled()) {
+                                1 -> it.setShowActionsInCompactView(0)
+                                2 -> it.setShowActionsInCompactView(0, 1)
+                                3 -> it.setShowActionsInCompactView(0, 1, 2)
+                                4 -> it.setShowActionsInCompactView(0, 1, 2, 3)
+                                else -> it.setShowActionsInCompactView()
                             }
                         }
                         .setShowCancelButton(true)
@@ -303,9 +304,10 @@ class NotificationService : Service() {
         startForeground(NOTIFICATION_ID, notification)
 
         //fix for https://github.com/florent37/Flutter-AssetsAudioPlayer/issues/139
-        //if (!action.isPlaying) {
-        //    stopForeground(false)
-        //}
+        if (!action.isPlaying && Build.VERSION.SDK_INT >= 24) {
+            stopForeground(2)
+        }
+
     }
 
     private fun createNotificationChannel() {
