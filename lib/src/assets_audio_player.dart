@@ -973,7 +973,7 @@ class AssetsAudioPlayer {
 
   void _notificationPlayPause() {
     if (_playlist?.notificationSettings?.customPlayPauseAction != null) {
-      _playlist?.notificationSettings?.customPlayPauseAction(this);
+      _playlist?.notificationSettings?.customPlayPauseAction!(this);
     } else {
       playOrPause();
     }
