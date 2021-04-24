@@ -1,3 +1,26 @@
+## 3.0.3+2
+* update build number
+## 3.0.3+1
+* fixed no function for stopForeground
+## 3.0.3
+
+* Fix notification issue
+## 3.0.2
+
+* Fix version issue
+## 3.0.1
+
+* Fix web player
+## 3.0.0
+
+* Fix some issues
+* Migrate to null safety
+
+## 2.0.15
+
+* update android 30 and fixed local assets issue
+* should fix android alarm manager issue
+
 ## 2.0.14
 
 * update packages
