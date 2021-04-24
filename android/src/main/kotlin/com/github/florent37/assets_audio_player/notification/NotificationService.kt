@@ -62,7 +62,7 @@ class NotificationService : Service() {
                         .build()
 
                 if(
-                        //pause -> play, play-> pause
+                //pause -> play, play-> pause
                         stateCompat?.state != newState.state ||
                         //speed changed
                         stateCompat?.playbackSpeed != speed ||
@@ -305,7 +305,7 @@ class NotificationService : Service() {
 
         //fix for https://github.com/florent37/Flutter-AssetsAudioPlayer/issues/139
         if (!action.isPlaying && Build.VERSION.SDK_INT >= 24) {
-           stopForeground(2)
+            stopForeground(2)
         }
 
     }
