@@ -123,11 +123,11 @@ class PlayerImplemExoPlayer(
     }
 
     private fun getDataSource(context: Context,
-                      flutterAssets: FlutterPlugin.FlutterAssets,
-                      assetAudioPath: String?,
-                      audioType: String,
-                      networkHeaders: Map<*, *>?,
-                      assetAudioPackage: String?
+                              flutterAssets: FlutterPlugin.FlutterAssets,
+                              assetAudioPath: String?,
+                              audioType: String,
+                              networkHeaders: Map<*, *>?,
+                              assetAudioPackage: String?
     ): MediaSource {
         try {
             mediaPlayer?.stop()
@@ -149,7 +149,8 @@ class PlayerImplemExoPlayer(
                 }
 
                 return when(type){
-                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory, DefaultExtractorsFactory().setAdtsExtractorFlags(AdtsExtractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING)).setAllowChunklessPreparation(true)
+//                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory).setAllowChunklessPreparation(true)
+                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory)
                     PlayerImplemTesterExoPlayer.Type.DASH -> DashMediaSource.Factory(factory)
                     PlayerImplemTesterExoPlayer.Type.SmoothStreaming -> SsMediaSource.Factory(factory)
                     else -> ProgressiveMediaSource.Factory(factory, DefaultExtractorsFactory().setAdtsExtractorFlags(AdtsExtractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING))
