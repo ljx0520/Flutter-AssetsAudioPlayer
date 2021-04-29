@@ -20,6 +20,7 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource
 import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource
 import com.google.android.exoplayer2.upstream.*
 import com.google.android.exoplayer2.util.MimeTypes
+import com.google.android.exoplayer2.util.Util
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import java.io.File
 import kotlin.coroutines.resume
