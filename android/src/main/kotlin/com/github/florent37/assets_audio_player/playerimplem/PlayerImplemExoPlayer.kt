@@ -151,10 +151,10 @@ class PlayerImplemExoPlayer(
                 }
 
                 return when(type){
-//                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory).setAllowChunklessPreparation(true)
-                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory).setExtractorFactory(
-                            DefaultHlsExtractorFactory(
-                                    DefaultTsPayloadReaderFactory.FLAG_ALLOW_NON_IDR_KEYFRAMES, true))
+                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory).setAllowChunklessPreparation(true)
+//                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory).setExtractorFactory(
+//                            DefaultHlsExtractorFactory(
+//                                    DefaultTsPayloadReaderFactory.FLAG_ALLOW_NON_IDR_KEYFRAMES, true))
                     PlayerImplemTesterExoPlayer.Type.DASH -> DashMediaSource.Factory(factory)
                     PlayerImplemTesterExoPlayer.Type.SmoothStreaming -> SsMediaSource.Factory(factory)
                     else -> ProgressiveMediaSource.Factory(factory, DefaultExtractorsFactory().setAdtsExtractorFlags(AdtsExtractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING))
