@@ -150,7 +150,7 @@ class PlayerImplemExoPlayer(
 
                 val factory = DataSource.Factory {
                     val allowCrossProtocol = true
-                    val dataSource = DefaultHttpDataSource(userAgent, DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS, DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS, allowCrossProtocol, true)
+                    val dataSource = DefaultHttpDataSource(userAgent, DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS, DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS, allowCrossProtocol, null)
                     networkHeaders?.forEach {
                         it.key?.let { key ->
                             it.value?.let { value ->
