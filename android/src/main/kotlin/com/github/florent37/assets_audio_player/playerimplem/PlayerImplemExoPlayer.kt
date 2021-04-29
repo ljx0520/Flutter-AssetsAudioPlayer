@@ -123,7 +123,7 @@ class PlayerImplemExoPlayer(
         mediaPlayer?.playWhenReady = false
     }
 
-    private fun buildDataSourceFactory(): DataSource.Factory? {
+    private fun buildDataSourceFactory(): DataSource.Factory {
         val userAgent: String = Util.getUserAgent(context, "assets_audio_player")
         val httpDataSourceFactory: DataSource.Factory = DefaultHttpDataSourceFactory(
                 userAgent,
