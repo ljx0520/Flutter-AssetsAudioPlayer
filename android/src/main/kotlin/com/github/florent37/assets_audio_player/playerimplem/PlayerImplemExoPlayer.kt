@@ -162,18 +162,22 @@ class PlayerImplemExoPlayer(
                     dataSource;
                 }
 
-                return when(type){
-                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(buildDataSourceFactory(context)).createMediaSource(MediaItem.Builder()
-                            .setUri(uri)
-                            .setMimeType(MimeTypes.APPLICATION_M3U8)
-                            .build())
-//                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory).setExtractorFactory(
-//                            DefaultHlsExtractorFactory(
-//                                    DefaultTsPayloadReaderFactory.FLAG_ALLOW_NON_IDR_KEYFRAMES, true))
-                    PlayerImplemTesterExoPlayer.Type.DASH -> DashMediaSource.Factory(factory).createMediaSource(uri)
-                    PlayerImplemTesterExoPlayer.Type.SmoothStreaming -> SsMediaSource.Factory(factory).createMediaSource(uri)
-                    else -> ProgressiveMediaSource.Factory(factory, DefaultExtractorsFactory().setAdtsExtractorFlags(AdtsExtractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING)).createMediaSource(uri)
-                }
+                return PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(buildDataSourceFactory(context)).createMediaSource(MediaItem.Builder()
+                .setUri(uri)
+                        .setMimeType(MimeTypes.APPLICATION_M3U8)
+                        .build())
+//                return when(type){
+//                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(buildDataSourceFactory(context)).createMediaSource(MediaItem.Builder()
+//                            .setUri(uri)
+//                            .setMimeType(MimeTypes.APPLICATION_M3U8)
+//                            .build())
+////                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory).setExtractorFactory(
+////                            DefaultHlsExtractorFactory(
+////                                    DefaultTsPayloadReaderFactory.FLAG_ALLOW_NON_IDR_KEYFRAMES, true))
+//                    PlayerImplemTesterExoPlayer.Type.DASH -> DashMediaSource.Factory(factory).createMediaSource(uri)
+//                    PlayerImplemTesterExoPlayer.Type.SmoothStreaming -> SsMediaSource.Factory(factory).createMediaSource(uri)
+//                    else -> ProgressiveMediaSource.Factory(factory, DefaultExtractorsFactory().setAdtsExtractorFlags(AdtsExtractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING)).createMediaSource(uri)
+//                }
             } else if (audioType == Player.AUDIO_TYPE_FILE) {
                 return ProgressiveMediaSource
                         .Factory(DefaultDataSourceFactory(context, "assets_audio_player"), DefaultExtractorsFactory())
