@@ -151,7 +151,7 @@ class PlayerImplemExoPlayer(
                 }
 
                 return when(type){
-                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory).setAllowChunklessPreparation(true)
+                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory).setAllowChunklessPreparation(true).setMimeType(MimeTypes.APPLICATION_M3U8)
 //                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory).setExtractorFactory(
 //                            DefaultHlsExtractorFactory(
 //                                    DefaultTsPayloadReaderFactory.FLAG_ALLOW_NON_IDR_KEYFRAMES, true))
