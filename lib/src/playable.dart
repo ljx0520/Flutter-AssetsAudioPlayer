@@ -343,15 +343,18 @@ class Playlist extends Playable {
     return this;
   }
 
-  Playlist replaceAt(int index, PlaylistAudioReplacer replacer,
-      {bool keepPlayingPositionIfCurrent = false, Duration? currentPos = null}) {
+  Future<Playlist> replaceAt(int index, PlaylistAudioReplacer replacer,
+      {bool keepPlayingPositionIfCurrent = false, Duration? currentPos = null}) async {
     if (index < audios.length) {
       final oldElement = audios.elementAt(index);
       final newElement = replacer(oldElement);
       audios[index] = newElement;
-      super.currentlyOpenedIn.forEach((playerEditor) {
-        playerEditor.onAudioReplacedAt(index, keepPlayingPositionIfCurrent, currentPos);
-      });
+      for (var playerEditor in super.currentlyOpenedIn) {
+        await playerEditor.onAudioReplacedAt(index, keepPlayingPositionIfCurrent, currentPos);
+      }
+      // super.currentlyOpenedIn.forEach((playerEditor) {
+      //   playerEditor.onAudioReplacedAt(index, keepPlayingPositionIfCurrent, currentPos);
+      // });
     }
     return this;
   }

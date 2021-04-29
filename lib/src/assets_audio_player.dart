@@ -86,7 +86,7 @@ class PlayerEditor {
     }
   }
 
-  void onAudioReplacedAt(int index, bool keepPlayingPositionIfCurrent,  Duration? currentPos) {
+  Future<void> onAudioReplacedAt(int index, bool keepPlayingPositionIfCurrent,  Duration? currentPos) async {
     assetsAudioPlayer._updatePlaylistIndexes();
     if (assetsAudioPlayer._playlist!.playlistIndex == index) {
       var currentPosition = assetsAudioPlayer.currentPosition.value;
@@ -96,10 +96,10 @@ class PlayerEditor {
       final isPlaying = assetsAudioPlayer.isPlaying.value ?? false;
       //print('onAudioReplacedAt/ currentPosition : $currentPosition');
       if (keepPlayingPositionIfCurrent && currentPosition != null) {
-        assetsAudioPlayer._openPlaylistCurrent(
+        await assetsAudioPlayer._openPlaylistCurrent(
             seek: currentPosition, autoStart: isPlaying);
       } else {
-        assetsAudioPlayer._openPlaylistCurrent(autoStart: isPlaying);
+        await assetsAudioPlayer._openPlaylistCurrent(autoStart: isPlaying);
       }
     }
   }
