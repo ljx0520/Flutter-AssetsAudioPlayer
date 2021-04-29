@@ -123,6 +123,17 @@ class PlayerImplemExoPlayer(
         mediaPlayer?.playWhenReady = false
     }
 
+    private fun buildDataSourceFactory(): DataSource.Factory? {
+        val userAgent: String = Util.getUserAgent(context, "assets_audio_player")
+        val httpDataSourceFactory: DataSource.Factory = DefaultHttpDataSourceFactory(
+                userAgent,
+                DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS,
+                DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS,
+                true
+        )
+        return DefaultDataSourceFactory(context, httpDataSourceFactory)
+    }
+
     private fun getDataSource(context: Context,
                               flutterAssets: FlutterPlugin.FlutterAssets,
                               assetAudioPath: String?,
@@ -134,11 +145,12 @@ class PlayerImplemExoPlayer(
             mediaPlayer?.stop()
             if (audioType == Player.AUDIO_TYPE_NETWORK || audioType == Player.AUDIO_TYPE_LIVESTREAM) {
                 val uri = Uri.parse(assetAudioPath)
-                val userAgent = "assets_audio_player"
+//                val userAgent = "assets_audio_player"
+                val userAgent: String = Util.getUserAgent(context, "assets_audio_player")
 
                 val factory = DataSource.Factory {
                     val allowCrossProtocol = true
-                    val dataSource = DefaultHttpDataSource(userAgent, DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS, DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS, allowCrossProtocol, null)
+                    val dataSource = DefaultHttpDataSource(userAgent, DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS, DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS, allowCrossProtocol, true)
                     networkHeaders?.forEach {
                         it.key?.let { key ->
                             it.value?.let { value ->
@@ -150,7 +162,7 @@ class PlayerImplemExoPlayer(
                 }
 
                 return when(type){
-                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory).setAllowChunklessPreparation(true).createMediaSource(MediaItem.Builder()
+                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(buildDataSourceFactory()).createMediaSource(MediaItem.Builder()
                             .setUri(uri)
                             .setMimeType(MimeTypes.APPLICATION_M3U8)
                             .build())
