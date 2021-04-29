@@ -124,7 +124,7 @@ class PlayerImplemExoPlayer(
         mediaPlayer?.playWhenReady = false
     }
 
-    private fun buildDataSourceFactory(): DataSource.Factory {
+    private fun buildDataSourceFactory(context: Context): DataSource.Factory {
         val userAgent: String = Util.getUserAgent(context, "assets_audio_player")
         val httpDataSourceFactory: DataSource.Factory = DefaultHttpDataSourceFactory(
                 userAgent,
@@ -146,8 +146,8 @@ class PlayerImplemExoPlayer(
             mediaPlayer?.stop()
             if (audioType == Player.AUDIO_TYPE_NETWORK || audioType == Player.AUDIO_TYPE_LIVESTREAM) {
                 val uri = Uri.parse(assetAudioPath)
-//                val userAgent = "assets_audio_player"
-                val userAgent: String = Util.getUserAgent(context, "assets_audio_player")
+                val userAgent = "assets_audio_player"
+//                val userAgent: String = Util.getUserAgent(context, "assets_audio_player")
 
                 val factory = DataSource.Factory {
                     val allowCrossProtocol = true
@@ -163,7 +163,7 @@ class PlayerImplemExoPlayer(
                 }
 
                 return when(type){
-                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(buildDataSourceFactory()).createMediaSource(MediaItem.Builder()
+                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(buildDataSourceFactory(context)).createMediaSource(MediaItem.Builder()
                             .setUri(uri)
                             .setMimeType(MimeTypes.APPLICATION_M3U8)
                             .build())
