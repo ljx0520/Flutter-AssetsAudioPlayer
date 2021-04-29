@@ -162,7 +162,7 @@ class PlayerImplemExoPlayer(
                     dataSource;
                 }
 
-                return HlsMediaSource.Factory(buildDataSourceFactory(context)).createMediaSource(new MediaItem.Builder().setUri(uri).setMimeType(MimeTypes.APPLICATION_M3U8).build())
+                return HlsMediaSource.Factory(buildDataSourceFactory(context)).createMediaSource(MediaItem.Builder().setUri(uri).setMimeType(MimeTypes.APPLICATION_M3U8).build())
 //                return when(type){
 //                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(buildDataSourceFactory(context)).createMediaSource(MediaItem.Builder()
 //                            .setUri(uri)
