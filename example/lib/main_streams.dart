@@ -12,14 +12,14 @@ import 'player/SongsSelector.dart';
 import 'player/VolumeSelector.dart';
 
 void main() => runApp(
-      NeumorphicTheme(
-        theme: NeumorphicThemeData(
-          intensity: 0.8,
-          lightSource: LightSource.topLeft,
-        ),
-        child: MyApp(),
-      ),
-    );
+  NeumorphicTheme(
+    theme: NeumorphicThemeData(
+      intensity: 0.8,
+      lightSource: LightSource.topLeft,
+    ),
+    child: MyApp(),
+  ),
+);
 
 class MyApp extends StatefulWidget {
   @override
@@ -29,7 +29,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final audios = <Audio>[
     Audio.network(
-      'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Music_for_Video/springtide/Sounds_strange_weird_but_unmistakably_romantic_Vol1/springtide_-_03_-_We_Are_Heading_to_the_East.mp3',
+      // 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/Music_for_Video/springtide/Sounds_strange_weird_but_unmistakably_romantic_Vol1/springtide_-_03_-_We_Are_Heading_to_the_East.mp3',
+      'https://api.muslimlife.com.au/HLS/QqRTSSRnMah7jLdhGKEMdJ/cfe9204ca3bbf7354f757eab4c738061.m3u8',
       metas: Metas(
         title: 'Online',
         artist: 'Florent Champigny',
@@ -154,7 +155,7 @@ class _MyAppState extends State<MyApp> {
                         if (!snapshot.hasData) return const SizedBox();
                         final playing = snapshot.data!;
                         final myAudio =
-                            find(audios, playing.audio.assetAudioPath);
+                        find(audios, playing.audio.assetAudioPath);
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Neumorphic(
@@ -167,18 +168,18 @@ class _MyAppState extends State<MyApp> {
                             child: myAudio.metas.image?.path == null
                                 ? const SizedBox()
                                 : myAudio.metas.image?.type == ImageType.network
-                                    ? Image.network(
-                                        myAudio.metas.image!.path,
-                                        height: 150,
-                                        width: 150,
-                                        fit: BoxFit.contain,
-                                      )
-                                    : Image.asset(
-                                        myAudio.metas.image!.path,
-                                        height: 150,
-                                        width: 150,
-                                        fit: BoxFit.contain,
-                                      ),
+                                ? Image.network(
+                              myAudio.metas.image!.path,
+                              height: 150,
+                              width: 150,
+                              fit: BoxFit.contain,
+                            )
+                                : Image.asset(
+                              myAudio.metas.image!.path,
+                              height: 150,
+                              width: 150,
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         );
                       },
@@ -239,7 +240,7 @@ class _MyAppState extends State<MyApp> {
                                       loopMode: loopMode,
                                       isPlaying: isPlaying,
                                       isPlaylist:
-                                          playing.playlist.audios.length > 1,
+                                      playing.playlist.audios.length > 1,
                                       toggleLoop: () {
                                         _assetsAudioPlayer.toggleLoop();
                                       },
@@ -261,7 +262,7 @@ class _MyAppState extends State<MyApp> {
                               stream: _assetsAudioPlayer.realtimePlayingInfos,
                               builder: (context,
                                   AsyncSnapshot<RealtimePlayingInfos>
-                                      snapshot) {
+                                  snapshot) {
                                 if (!snapshot.hasData) {
                                   return const SizedBox();
                                 }
