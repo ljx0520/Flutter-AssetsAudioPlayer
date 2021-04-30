@@ -1,6 +1,7 @@
 package com.github.florent37.assets_audio_player.playerimplem
 
 import android.content.Context
+import android.util.Log
 import com.github.florent37.assets_audio_player.AssetAudioPlayerThrowable
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 
@@ -45,6 +46,8 @@ object PlayerFinder {
     private fun sortPlayerImpls(path: String?, originList: List<PlayerImplemTester>) : List<PlayerImplemTester> {
         val editedList = originList.toMutableList()
 
+//        Log.d("Debug", "Path: ($path)")
+
         path?.let {
             //add others suggestions
             if (path.endsWith(".m3u8")) {
@@ -74,12 +77,14 @@ object PlayerFinder {
             val playerwithDuration = implemTester.open(
                     configuration = configuration
             )
+//            Log.d("playerwithDuration", "playerwithDuration: ($playerwithDuration)")
             //if we're here : no exception, we can return it
             return playerwithDuration
         } catch (unrachable : AssetAudioPlayerThrowable.UnreachableException) {
             //not usefull to test all players if the first is UnreachableException
             throw NoPlayerFoundException(why= unrachable)
         } catch (t: Throwable) {
+//            Log.d("Throwable", "($t)")
             //else, remove it from list and test the next
             val implsToTest = remainingImpls.toMutableList().apply {
                 removeAt(0)

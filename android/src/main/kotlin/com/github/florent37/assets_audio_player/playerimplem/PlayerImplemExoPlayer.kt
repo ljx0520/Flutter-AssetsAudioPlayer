@@ -45,11 +45,11 @@ class PlayerImplemTesterExoPlayer(private val type: Type) : PlayerImplemTester {
             Log.d("PlayerImplem", "trying to open with exoplayer($type)")
         }
         //some type are only for web
-        if(configuration.audioType != Player.AUDIO_TYPE_LIVESTREAM && configuration.audioType != Player.AUDIO_TYPE_LIVESTREAM){
-            if(type == Type.HLS || type == Type.DASH || type == Type.SmoothStreaming) {
-                throw IncompatibleException(configuration.audioType, type)
-            }
-        }
+//        if(configuration.audioType != Player.AUDIO_TYPE_LIVESTREAM && configuration.audioType != Player.AUDIO_TYPE_LIVESTREAM){
+//            if(type == Type.HLS || type == Type.DASH || type == Type.SmoothStreaming) {
+//                throw IncompatibleException(configuration.audioType, type)
+//            }
+//        }
 
         val mediaPlayer = PlayerImplemExoPlayer(
                 onFinished = {
@@ -124,17 +124,6 @@ class PlayerImplemExoPlayer(
         mediaPlayer?.playWhenReady = false
     }
 
-    private fun buildDataSourceFactory(context: Context): DataSource.Factory {
-        val userAgent: String = Util.getUserAgent(context, "assets_audio_player")
-        val httpDataSourceFactory: DataSource.Factory = DefaultHttpDataSourceFactory(
-                userAgent,
-                DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS,
-                DefaultHttpDataSource.DEFAULT_READ_TIMEOUT_MILLIS,
-                true
-        )
-        return DefaultDataSourceFactory(context, httpDataSourceFactory)
-    }
-
     private fun getDataSource(context: Context,
                               flutterAssets: FlutterPlugin.FlutterAssets,
                               assetAudioPath: String?,
@@ -147,7 +136,6 @@ class PlayerImplemExoPlayer(
             if (audioType == Player.AUDIO_TYPE_NETWORK || audioType == Player.AUDIO_TYPE_LIVESTREAM) {
                 val uri = Uri.parse(assetAudioPath)
                 val userAgent = "assets_audio_player"
-//                val userAgent: String = Util.getUserAgent(context, "assets_audio_player")
 
                 val factory = DataSource.Factory {
                     val allowCrossProtocol = true
@@ -162,20 +150,14 @@ class PlayerImplemExoPlayer(
                     dataSource;
                 }
 
-//                return HlsMediaSource.Factory(buildDataSourceFactory(context)).createMediaSource(MediaItem.Builder().setUri(uri).setMimeType(MimeTypes.APPLICATION_M3U8).build())
-                return HlsMediaSource.Factory(factory).setAllowChunklessPreparation(true).createMediaSource(uri)
-//                return when(type){
-//                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(buildDataSourceFactory(context)).createMediaSource(MediaItem.Builder()
-//                            .setUri(uri)
-//                            .setMimeType(MimeTypes.APPLICATION_M3U8)
-//                            .build())
-////                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory).setExtractorFactory(
-////                            DefaultHlsExtractorFactory(
-////                                    DefaultTsPayloadReaderFactory.FLAG_ALLOW_NON_IDR_KEYFRAMES, true))
-//                    PlayerImplemTesterExoPlayer.Type.DASH -> DashMediaSource.Factory(factory).createMediaSource(uri)
-//                    PlayerImplemTesterExoPlayer.Type.SmoothStreaming -> SsMediaSource.Factory(factory).createMediaSource(uri)
-//                    else -> ProgressiveMediaSource.Factory(factory, DefaultExtractorsFactory().setAdtsExtractorFlags(AdtsExtractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING)).createMediaSource(uri)
-//                }
+//                return HlsMediaSource.Factory(factory).setAllowChunklessPreparation(true).createMediaSource(uri)
+//                Log.d("Debug", "Uri ($uri) ; PlayerImplemTesterExoPlayer.Type: ($type)")
+                return when(type){
+                    PlayerImplemTesterExoPlayer.Type.HLS -> HlsMediaSource.Factory(factory).setAllowChunklessPreparation(true)
+                    PlayerImplemTesterExoPlayer.Type.DASH -> DashMediaSource.Factory(factory)
+                    PlayerImplemTesterExoPlayer.Type.SmoothStreaming -> SsMediaSource.Factory(factory)
+                    else -> ProgressiveMediaSource.Factory(factory, DefaultExtractorsFactory().setAdtsExtractorFlags(AdtsExtractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING))
+                }.createMediaSource(uri)
             } else if (audioType == Player.AUDIO_TYPE_FILE) {
                 return ProgressiveMediaSource
                         .Factory(DefaultDataSourceFactory(context, "assets_audio_player"), DefaultExtractorsFactory())

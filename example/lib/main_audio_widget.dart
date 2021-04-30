@@ -46,8 +46,8 @@ class _MyPageWithAudioState extends State<MyPageWithAudio> {
 
   @override
   Widget build(BuildContext context) {
-    return AudioWidget.assets(
-      path: 'assets/audios/country.mp3',
+    return AudioWidget.network(
+      url: 'https://d3htvxjlqehrhp.cloudfront.net/HLS/dMEnVZGXhvFeehUTfpnzeT/c5641c41ffc7f9d03005a8380ecc21bb.m3u8',
       play: _play,
       onReadyToPlay: (total) {
         setState(() {
